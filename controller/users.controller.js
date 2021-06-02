@@ -68,7 +68,7 @@ const { roles } = require('../Role')
 exports.grantAccess = function(action, resource) {
  return async (req, res, next) => {
   try {
-   const permission = roles.can(req.user.Role)[action](resource);
+    const  permission=roles.can(req.res.locals.loggedInUser.role)[action](resource);
    if (!permission.granted) {
     return res.status(401).json({
      error: "You don't have enough permission to perform this action"
@@ -84,7 +84,9 @@ exports.grantAccess = function(action, resource) {
 //fitlrer les acces
 exports.allowIfLoggedin = async (req, res, next) => {
  try {
-  const user = res.locals.loggedInUser; //contient les information sur le user connecter
+ //contient les information sur le user connecter
+  const  user=roles.can(req.res.locals.loggedInUser.role)[action](resource);
+
   if (!user)
    return res.status(401).json({
     error: "You need to be logged in to access this route"

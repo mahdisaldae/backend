@@ -6,10 +6,10 @@ const path = require('path')
 
 
 const User = require('./model/user.model')
-const routes = require('./routes/user.routes');
+//const routes = require('./routes/user.routes');
 const route = require('./routes/users.routes');
 const aut = require('./routes/Aut.routes');
-
+const offer=require('./routes/offer.routes')
 
 require("dotenv").config({
  path: path.join(__dirname, "../.env")
@@ -26,10 +26,6 @@ mongoose
  });
 
 app.use(bodyParser.urlencoded({ extended: true }));//obsolète
-
-
-
-
 
 
 //token verification
@@ -52,9 +48,11 @@ app.use(async (req, res, next) => {
  }
 });
 
-app.use('/', routes);
+
 app.use('/user', route);
 app.use('/Aut', aut);
+app.use('/api', offer);
+
 
 app.listen(PORT, () => {
   console.log('Server is listening on Port:', PORT)
